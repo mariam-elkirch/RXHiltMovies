@@ -4,6 +4,7 @@
     package="com.example.pockomen">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -16,7 +17,10 @@
         android:theme="@style/Theme.Pockomen"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".favourite.view.FavouriteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".displayMovies.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

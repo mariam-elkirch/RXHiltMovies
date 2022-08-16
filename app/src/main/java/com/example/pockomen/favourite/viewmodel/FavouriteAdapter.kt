@@ -1,4 +1,4 @@
-package com.example.pockomen
+package com.example.pockomen.favourite.viewmodel
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,15 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pockomen.databinding.MovieItemBinding
+import com.example.pockomen.displayMovies.view.MoviesAdapter
+import com.example.pockomen.model.Favourite
 import com.example.pockomen.model.Result
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MyViewHolder>() {
+class FavouriteAdapter : RecyclerView.Adapter<FavouriteAdapter.MyViewHolder>() {
     inner class MyViewHolder(val binding: MovieItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private var moviesList = mutableListOf<Result>()
+    private var moviesList = mutableListOf<Favourite>()
 
-    fun setData(moviesList: List<Result>) {
+    fun setData(moviesList: List<Favourite>) {
         this.moviesList = moviesList.toMutableList()
         Log.i("tag","Adapter"+moviesList.toString()+"Adapter")
         notifyDataSetChanged()
@@ -26,15 +28,18 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MyViewHolder>() {
         return MyViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+    override fun getItemCount() = moviesList.size
+    fun getMovieByPosition(position :Int) :Favourite {
+        return moviesList.get(position)
+    }
+
+    override fun onBindViewHolder(holder: FavouriteAdapter.MyViewHolder, position: Int) {
         val movie = moviesList.get(position)
         holder.binding.apply {
             textView.text = movie.title
-            Log.i("tag","title"+movie.title)
             Glide.with(holder.binding.textView.context).load("https://image.tmdb.org/t/p/w500/${movie.poster_path}")
                 .into(holder.binding.imageView)
         }
     }
-
-    override fun getItemCount() = moviesList.size
 }
